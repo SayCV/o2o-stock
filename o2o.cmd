@@ -1,6 +1,9 @@
-@echo off 2>con 3>&2 4>>%0
+rem @echo off 2>con 3>&2 4>>%0
+@echo off
 title %~n0
 cd /d %~dp0
+set HOME=%cd%
+set ORIGIN_HOME=%cd%
 
 set "CHROME_TOP_ROOT_XP=%userprofile%/AppData/Local/Chromium"
 set "CHROME_TOP_ROOT_WIN7=%userprofile%/Local Settings/Application Data/Chromium"
@@ -15,6 +18,9 @@ set "NODEJS_ROOT=%NODEJS_TOP_ROOT%"
 set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 rem call %NODEJS_HOME%/nodevars.bat
+
+call npm install
+cd %HOME%
 
 set "URL=http://localhost:3000"
 
