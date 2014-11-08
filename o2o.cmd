@@ -1,4 +1,4 @@
-rem @echo off 2>con 3>&2 4>>%0
+@rem @echo off 2>con 3>&2 4>>%0
 @echo off
 title %~n0
 cd /d %~dp0
