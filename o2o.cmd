@@ -1,3 +1,7 @@
+@echo off 2>con 3>&2 4>>%0
+title %~n0
+cd /d %~dp0
+
 set "ANDROID_TOP_ROOT=D:/Android"
 set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
 
