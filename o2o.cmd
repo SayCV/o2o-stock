@@ -19,7 +19,10 @@ set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 rem call %NODEJS_HOME%/nodevars.bat
 
-call npm install
+if not exist localNpmInstall.stamp (
+	call npm install
+	type nul>localNpmInstall.stamp
+)
 cd %HOME%
 
 set "URL=http://localhost:3000"
