@@ -27,8 +27,8 @@ cd %HOME%
 
 set "URL=http://localhost:3000"
 
-if not exist %CHROME_TOP_ROOT_XP% (
-	if not exist %CHROME_TOP_ROOT_WIN7% (
+if not exist "%CHROME_TOP_ROOT_XP%" (
+	if not exist "%CHROME_TOP_ROOT_WIN7%" (
 		start /min iexplore "%URL%"
 	)
 ) else (
