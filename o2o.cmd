@@ -37,5 +37,5 @@ if not exist %CHROME_TOP_ROOT_XP% (
 
 node server.js
 
-rem PAUSE
+PAUSE
 EXIT
