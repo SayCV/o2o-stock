@@ -7,9 +7,9 @@ set HOME=%cd%
 set ORIGIN_HOME=%cd%
 
 set "CHROME_TOP_ROOT_XP=%userprofile%/AppData/Local/Chromium"
-set "CHROME_TOP_ROOT_WIN7=%userprofile%/Local Settings/Application Data/Chromium"
+set "CHROME_TOP_ROOT_WIN7_XP=%userprofile%/Local Settings/Application Data/Chromium"
 set "PATH=%CHROME_TOP_ROOT_XP%/Application;%PATH%"
-set "PATH=%CHROME_TOP_ROOT_WIN7%/Application;%PATH%"
+set "PATH=%CHROME_TOP_ROOT_WIN7_XP%/Application;%PATH%"
 
 set "ANDROID_TOP_ROOT=D:/Android"
 set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
@@ -26,13 +26,12 @@ if not exist localNpmInstall.stamp (
 )
 cd %HOME%
 
-set "URL=http://localhost:3000"
+set "URL=http://localhost:8000"
 
-if not exist "%CHROME_TOP_ROOT_XP%" (
-	if not exist "%CHROME_TOP_ROOT_WIN7%" (
-		start /min iexplore "%URL%"
-	)
+if not exist "%CHROME_TOP_ROOT_WIN7_XP%" (
+	start /min iexplore "%URL%"
 ) else (
+	echo 0
 	start /min chrome "%URL%"
 )
 
