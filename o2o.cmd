@@ -31,7 +31,6 @@ set "URL=http://localhost:8000"
 if not exist "%CHROME_TOP_ROOT_WIN7_XP%" (
 	start /min iexplore "%URL%"
 ) else (
-	echo 0
 	start /min chrome "%URL%"
 )
 
