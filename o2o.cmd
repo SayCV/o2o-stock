@@ -17,8 +17,14 @@ set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
 set "NODEJS_TOP_ROOT=%ANDROID_TOP_ROOT%/nodejs"
 set "NODEJS_ROOT=%NODEJS_TOP_ROOT%"
 set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
+set "NODEJS_USER_DFLT_HOME=%userprofile%/Application Data/npm"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 
+if not exist "%NODEJS_USER_DFLT_HOME%" (
+	cd /d %userprofile%/Application Data && mkdir npm
+)	
+cd %HOME%
+	
 for /f "tokens=2,*" %%i in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v "Desktop"') do (
 	set desk=%%j
 )
