@@ -6,10 +6,15 @@ cd /d %~dp0
 set HOME=%cd%
 set ORIGIN_HOME=%cd%
 
-set "CHROME_TOP_ROOT_XP=%userprofile%/AppData/Local/Chromium"
-set "CHROME_TOP_ROOT_WIN7_XP=%userprofile%/Local Settings/Application Data/Chromium"
-set "PATH=%CHROME_TOP_ROOT_XP%/Application;%PATH%"
-set "PATH=%CHROME_TOP_ROOT_WIN7_XP%/Application;%PATH%"
+for /f "tokens=3" %%a in ('wmic os get Caption') do if /i "%%a" neq "" set MDK_WIN_VER=%%a
+
+if /i %MDK_WIN_VER%==xp (
+	set "CHROME_TOP_ROOT=%userprofile%/Local Settings/Application Data/Chromium"
+) else (
+	set "CHROME_TOP_ROOT=%userprofile%/AppData/Local/Chromium"
+)
+
+set "PATH=%CHROME_TOP_ROOT%/Application;%PATH%"
 
 set "ANDROID_TOP_ROOT=D:/Android"
 set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
@@ -17,11 +22,16 @@ set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
 set "NODEJS_TOP_ROOT=%ANDROID_TOP_ROOT%/nodejs"
 set "NODEJS_ROOT=%NODEJS_TOP_ROOT%"
 set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
-set "NODEJS_USER_DFLT_HOME=%userprofile%/Application Data/npm"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 
-if not exist "%NODEJS_USER_DFLT_HOME%" (
-	cd /d %userprofile%/Application Data && mkdir npm
+if /i %MDK_WIN_VER%==xp (
+	set "NODEJS_USER_DFLT_HOME=%userprofile%/Application Data"
+) else (
+	set "NODEJS_USER_DFLT_HOME=%userprofile%/AppData/Roaming"
+)
+
+if not exist "%NODEJS_USER_DFLT_HOME%/npm" (
+	cd /d %NODEJS_USER_DFLT_HOME% && mkdir npm
 )	
 cd %HOME%
 	
@@ -64,7 +74,7 @@ DEL !cSctVBS! /f /q
 cd %HOME%
 set "URL=http://localhost:8000"
 
-if not exist "%CHROME_TOP_ROOT_WIN7_XP%" (
+if not exist "%CHROME_TOP_ROOT%" (
 	start /min iexplore "%URL%"
 ) else (
 	start /min chrome "%URL%"
