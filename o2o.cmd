@@ -82,5 +82,8 @@ if not exist "%CHROME_TOP_ROOT%" (
 
 node server.js
 
-PAUSE
+if "%errorlevel%"=="0" ( 
+	PAUSE
+)
+
 EXIT
