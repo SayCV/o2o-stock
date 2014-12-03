@@ -1,6 +1,6 @@
 @rem @echo off 2>con 3>&2 4>>%0
-@echo off
-if not "%~1"=="p" start /min cmd.exe /c %0 p&exit
+@echo on
+rem if not "%~1"=="p" start /min cmd.exe /c %0 p&exit
 title %~n0
 cd /d %~dp0
 set HOME=%cd%
@@ -18,13 +18,17 @@ set "NODEJS_TOP_ROOT=%ANDROID_TOP_ROOT%/nodejs"
 set "NODEJS_ROOT=%NODEJS_TOP_ROOT%"
 set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
 set "PATH=%NODEJS_ROOT%;%PATH%"
-rem call %NODEJS_HOME%/nodevars.bat
 
 for /f "tokens=2,*" %%i in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v "Desktop"') do (
 	set desk=%%j
 )
 
 if not exist localNpmInstall.stamp (
+	echo call %NODEJS_HOME%/nodevars.bat >> temp.bat
+	echo npm config set prefix "%NODEJS_HOME%" >> temp.bat
+	call temp.bat
+	del temp.bat
+
 	call npm install
 	type nul>localNpmInstall.stamp
 )
