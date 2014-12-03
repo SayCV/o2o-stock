@@ -20,12 +20,38 @@ set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 rem call %NODEJS_HOME%/nodevars.bat
 
+for /f "tokens=2,*" %%i in ('reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" /v "Desktop"') do (
+	set desk=%%j
+)
+
 if not exist localNpmInstall.stamp (
 	call npm install
 	type nul>localNpmInstall.stamp
 )
-cd %HOME%
+if exist "%desk%\%~N0.lnk" (
+	goto :ingore_shortcut
+)
 
+@echo off
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET LinkName=%~N0
+SET Esc_LinkDest=%%desk%%\!LinkName!.lnk
+SET Esc_LinkTarget=%%HOME%%\%~N0.cmd
+SET cSctVBS=CreateShortcut.vbs
+SET LOG=".\%~N0_runtime.log"
+((
+  echo Set oWS = WScript.CreateObject^("WScript.Shell"^) 
+  echo sLinkFile = oWS.ExpandEnvironmentStrings^("!Esc_LinkDest!"^)
+  echo Set oLink = oWS.CreateShortcut^(sLinkFile^) 
+  echo oLink.TargetPath = oWS.ExpandEnvironmentStrings^("!Esc_LinkTarget!"^)
+  echo oLink.Save
+)1>!cSctVBS!
+cscript //nologo .\!cSctVBS!
+DEL !cSctVBS! /f /q
+)1>>!LOG! 2>>&1
+
+:ingore_shortcut
+cd %HOME%
 set "URL=http://localhost:8000"
 
 if not exist "%CHROME_TOP_ROOT_WIN7_XP%" (
