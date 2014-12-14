@@ -1,6 +1,6 @@
 @rem @echo off 2>con 3>&2 4>>%0
 @echo off
-rem if not "%~1"=="p" start /min cmd.exe /c %0 p&exit
+if not "%~1"=="p" start /min cmd.exe /c %0 p&exit
 title %~n0
 cd /d %~dp0
 set HOME=%cd%
