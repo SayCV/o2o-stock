@@ -7,11 +7,17 @@ set HOME=%cd%
 set ORIGIN_HOME=%cd%
 
 for /f "tokens=3" %%a in ('wmic os get Caption') do if /i "%%a" neq "" set MDK_WIN_VER=%%a
+rem Query whether this system is 32-bit or 64-bit
+rem See also: http://stackoverflow.com/a/24590583/1299302
+reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" |^
+find /i "x86" > NUL && set arch_ext=32 || set arch_ext=64
 
-if /i %MDK_WIN_VER%==xp (
+if "%MDK_WIN_VER%"=="xp" (
 	set "CHROME_TOP_ROOT=%userprofile%/Local Settings/Application Data/Chromium"
+	rem set "CHROME_TOP_ROOT=C:/Program Files/Google/Chrome"
 ) else (
-	set "CHROME_TOP_ROOT=%userprofile%/AppData/Local/Chromium"
+	rem set "CHROME_TOP_ROOT=%userprofile%/AppData/Local/Chromium"
+	set "CHROME_TOP_ROOT=C:/Program Files (x86)/Google/Chrome"
 )
 
 set "PATH=%CHROME_TOP_ROOT%/Application;%PATH%"
