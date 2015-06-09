@@ -12,9 +12,9 @@ rem See also: http://stackoverflow.com/a/24590583/1299302
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" |^
 find /i "x86" > NUL && set arch_ext=32 || set arch_ext=64
 
-if "%MDK_WIN_VER%"=="xp" (
-	set "CHROME_TOP_ROOT=%userprofile%/Local Settings/Application Data/Chromium"
-	rem set "CHROME_TOP_ROOT=C:/Program Files/Google/Chrome"
+if /i "%MDK_WIN_VER%" == "xp" (
+	rem set "CHROME_TOP_ROOT=%userprofile%/Local Settings/Application Data/Chromium"
+	set "CHROME_TOP_ROOT=C:/Program Files/Google/Chrome"
 ) else (
 	rem set "CHROME_TOP_ROOT=%userprofile%/AppData/Local/Chromium"
 	set "CHROME_TOP_ROOT=C:/Program Files (x86)/Google/Chrome"
@@ -22,15 +22,14 @@ if "%MDK_WIN_VER%"=="xp" (
 
 set "PATH=%CHROME_TOP_ROOT%/Application;%PATH%"
 
-set "ANDROID_TOP_ROOT=D:/Android"
-set "ANDROID_SDK_TOP_ROOT=D:/Android/android-studio/sdk"
+set "QDK_ROOT=D:/qdk"
 
-set "NODEJS_TOP_ROOT=%ANDROID_TOP_ROOT%/nodejs"
+set "NODEJS_TOP_ROOT=%QDK_ROOT%/nodejs"
 set "NODEJS_ROOT=%NODEJS_TOP_ROOT%"
 set "NODEJS_HOME=%NODEJS_TOP_ROOT%"
 set "PATH=%NODEJS_ROOT%;%PATH%"
 
-if /i %MDK_WIN_VER%==xp (
+if /i "%MDK_WIN_VER%" == "xp" (
 	set "NODEJS_USER_DFLT_HOME=%userprofile%/Application Data"
 ) else (
 	set "NODEJS_USER_DFLT_HOME=%userprofile%/AppData/Roaming"
