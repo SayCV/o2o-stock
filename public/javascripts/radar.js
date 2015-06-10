@@ -85,8 +85,8 @@ function checkTimeLine()
 
 var lastvResult;
 var lastvLatest;
-var debug = 0;
-var initflag=0;
+var debug = 1;
+var initflag=1;
 function checkTime(){
 	var myDate = new Date();
 	var hour = myDate.getHours();
@@ -134,7 +134,7 @@ function checkTime(){
 
 	if(debug || ( (hour == 9 && minute >=24) || hour > 9 && hour <15) || (hour == 15 && minute <= 1)){  
 		console.log(initflag);
-		//if(initflag == 0)
+		if(initflag == 0)
 		{
 			/*
 			for (var index =0; index = stockTBRight.length;index++)
@@ -148,7 +148,8 @@ function checkTime(){
 		}
 		
 		console.log("get latest");
-		//insertJS('http://stock.gtimg.cn/data/index.php?appn=radar&t=latest&v=vLATEST', callbackLeft)
+		insertJS('http://stock.gtimg.cn/data/index.php?appn=radar&t=latest&v=vLATEST', callbackLeft)
+		console.log("get latest end");
 	}
 	else{
 		console.log("get all");
